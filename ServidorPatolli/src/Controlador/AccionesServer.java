@@ -70,6 +70,8 @@ public class AccionesServer implements AccionesGame, Observer{
         
         sendGameState();
         game.initGame();
+		
+		// algo
     }
     
     // Preparar el juego
