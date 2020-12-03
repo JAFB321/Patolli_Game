@@ -109,7 +109,7 @@ public class AccionesServer implements AccionesGame, Observer{
         for (int i = 0; i < IDs.length; i++) {
             IDs[i] = Jugadores.get(i).ID;
         }
-        
+         
         setState();
         AccionSendGameState Accion = new AccionSendGameState();
         Accion.state = (GameState)(Tools.deepCopy(state));
