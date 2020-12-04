@@ -33,12 +33,13 @@ public class Game implements Runnable {
 	}
 
 	public void initJugadores() {
-		Casilla[] iniciales = tablero.getCasillasInciales();
+		Casilla[][] iniciales = tablero.getCasillasInciales();
 
 		for (int i = 0; i < players.length; i++) {
 			players[i].cantidad = cantidadInicial;
 			players[i].initFichas(nFichasIniciales);
-			players[i].CasillaInicial = iniciales[i];
+			players[i].CasillaInicial = iniciales[i][0];
+			players[i].CasillaFinal = iniciales[i][1];
 		}
 	}
 
@@ -103,6 +104,10 @@ public class Game implements Runnable {
 		// pero la casilla destino est ocupada, vuelva a preguntarle
 		// al cliente una nueva casilla a elegir 
 		// NOTA: Tambien validar saltar turno
+		
+		// Mover las casillas iniciales de cada jugador
+		// Establecer casillas finales para cada jugador
+		// 
 		
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();

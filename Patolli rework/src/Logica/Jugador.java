@@ -19,6 +19,8 @@ public class Jugador implements Serializable{
     public Ficha[] fichas;
     
     public Casilla CasillaInicial;
+	public Casilla CasillaFinal;
+	
 
 
     public boolean PagarApuesta(int cantidadPagar){
