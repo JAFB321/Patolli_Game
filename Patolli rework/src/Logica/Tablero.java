@@ -79,8 +79,15 @@ public class Tablero implements Serializable {
 	}
 
 	// Para fichas de los jugadores
-	public Casilla[] getCasillasInciales() {
-		Casilla[] arr = {casillas[0], casillas[17], casillas[34], casillas[51]};
+	public Casilla[][] getCasillasInciales() {
+		// Retorna un arreglo bidimensional con [FichaInicial][FichaFinal]
+		Casilla[][] arr = {
+			new Casilla[]{casillas[9], casillas[60]},
+			new Casilla[]{casillas[26], casillas[9]},
+			new Casilla[]{casillas[43], casillas[26]},
+			new Casilla[]{casillas[60], casillas[43]}
+		};
+		
 		return arr;
 	}
 
@@ -88,6 +95,7 @@ public class Tablero implements Serializable {
 		Casilla casillaInicial = ficha.player.CasillaInicial;
 		if (!casillaInicial.ocupada) {
 			casillaInicial.ficha = ficha;
+			casillaInicial.ocupada = true;
 			ficha.enTablero = true;
 			ficha.casilla = casillaInicial;
 			
@@ -109,6 +117,7 @@ public class Tablero implements Serializable {
 			if (casilla.ficha != null) {
 				if (casilla.ficha.ID == ficha.ID) {
 					casilla.ficha = null;
+					casilla.ocupada = false;
 				}
 			}
 		}
