@@ -10,4 +10,5 @@ public interface AccionesGame {
     
     public void sendNextTurn();
     public void sendPlayerEliminated();
+	public void notifyPlayer(Jugador player, String msg, boolean pauseGame, boolean ERROR);
 }

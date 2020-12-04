@@ -4,6 +4,7 @@ import Controlador.Acciones.AccionControlador;
 import Controlador.Acciones.AccionCreateGame;
 import Controlador.Acciones.AccionJoinGame;
 import Controlador.Acciones.AccionMostrarMensaje;
+import Controlador.Acciones.AccionNotifyMessage;
 import Controlador.Acciones.AccionRequestEscogerFicha;
 import Controlador.Acciones.AccionSendEscogerFicha;
 import Controlador.Acciones.AccionSendGameState;
@@ -129,6 +130,19 @@ public class AccionesCliente implements AccionesGUI, Observer{
 				int nmovimientos = accion.nmovimientos;
 				SeleccionarFicha(fichas, nmovimientos);
 			}
+			
+			else if(arg instanceof AccionNotifyMessage){
+                AccionNotifyMessage Accion = (AccionNotifyMessage)arg;
+				
+				if(Accion.ERROR) GUI.MostrarError(Accion.msg); 
+				else GUI.MostrarMensaje(Accion.msg);
+				
+				if(Accion.pauseGame){
+					AccionControlador ResumeGame = new AccionControlador(enmAcciones.sendResumeGame);
+					cliente.SendObject(ResumeGame);
+				}
+            }
+			
             else if(((AccionControlador)arg).Accion == enmAcciones.requestTirarDados){
                 TirarDados();
             }  

@@ -47,6 +47,10 @@ public class ControladorGUI {
     public void MostrarMensaje(String msg){
         JOptionPane.showMessageDialog(currentPanel, msg);
     }
+	
+	public void MostrarError(String msg){
+        JOptionPane.showMessageDialog(currentPanel, msg, "Advertencia", 0);
+    }
     
     
     // Juego

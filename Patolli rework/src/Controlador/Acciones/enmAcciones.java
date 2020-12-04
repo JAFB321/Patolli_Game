@@ -6,5 +6,6 @@ public enum enmAcciones {
     requestTirarDados,
     sendTirarDados,
     requesPagarApuesta,
-    sendPagarApuesta    
+    sendPagarApuesta,
+	sendResumeGame
 }

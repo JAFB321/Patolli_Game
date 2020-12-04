@@ -99,39 +99,41 @@ public class Game implements Runnable {
 		if (nmovimientos == 5) {
 			nmovimientos = 10;
 		}
-
-		// Validar que cuando se seleccione una ficha para mover, 
-		// pero la casilla destino est ocupada, vuelva a preguntarle
-		// al cliente una nueva casilla a elegir 
-		// NOTA: Tambien validar saltar turno
+		
+		acciones.notifyPlayer(getCurrentPlayer(), "Tus cañas han caido en "+nmovimientos, true, false);
+		
+		// Enviar info acerca de los siguientes eventos:
+		// - Mostrar mensaje de que su tirada fue 1 y se metera una ficha al tablero
+		// - Mostrar mensaje cuando la ficha no se pueda mover y tenga que elegir otra		
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
-
+			
 			if (ficha == null || !tablero.MeterFichaIncio(ficha)) {
 
 				do {
 					ficha = waitEscogerFicha();
-				} while (!AvanzarFicha(ficha, nmovimientos));			
+				} while (!AvanzarFicha(ficha, nmovimientos));
 			}
 			return;
 		}
 
-			if (vuelta > 1) {
-				if (nmovimientos > 0) {
-					Ficha ficha;
-					do {
-						ficha = waitEscogerFicha();
-					} while (!AvanzarFicha(ficha, nmovimientos));
-				}
+		if (vuelta > 1) {
+			if (nmovimientos > 0) {
+				Ficha ficha;
+				do {
+					ficha = waitEscogerFicha();
+				} while (!AvanzarFicha(ficha, nmovimientos));
 			}
-
-			// Pagar apuesta
-			if (nmovimientos == 0) {
-				JugadorPagarApuesta(cantidadAPag);
-			}
-
 		}
-		// Turnos
+
+		// Pagar apuesta
+		if (nmovimientos == 0) {
+			JugadorPagarApuesta(cantidadAPag);
+		}
+
+	}
+	// Turnos
+
 	public void SiguienteTurno() {
 
 		int next = getNextPlayer(currentPlayer);
