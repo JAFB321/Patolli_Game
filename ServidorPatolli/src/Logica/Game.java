@@ -105,9 +105,6 @@ public class Game implements Runnable {
 		// al cliente una nueva casilla a elegir 
 		// NOTA: Tambien validar saltar turno
 		
-		// Mover las casillas iniciales de cada jugador
-		// Establecer casillas finales para cada jugador
-		// 
 		
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
@@ -115,17 +112,19 @@ public class Game implements Runnable {
 			if(ficha != null && tablero.MeterFichaIncio(ficha)) {
 				return;
 			} else {
-				ficha = waitEscogerFicha();
-				if(AvanzarFicha(ficha, nmovimientos)){
-					return;
-				}
+				
+				do {
+					ficha = waitEscogerFicha();
+				} while (!AvanzarFicha(ficha, nmovimientos));							
 			}
 		}
 
 		if (vuelta > 1) {
 			if (nmovimientos > 0) {
 				Ficha ficha = waitEscogerFicha();
-				AvanzarFicha(ficha, nmovimientos);
+				do {
+					ficha = waitEscogerFicha();
+				} while (!AvanzarFicha(ficha, nmovimientos));						
 			}
 		}
 
