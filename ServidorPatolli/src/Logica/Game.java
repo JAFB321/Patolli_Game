@@ -92,7 +92,7 @@ public class Game implements Runnable {
 		}
 
 		// enviarle al cliente cuanto cayó
-		if (vuelta %2 == 1) {
+		if (vuelta % 2 == 1) {
 			nmovimientos = 1;
 		}
 
@@ -104,38 +104,34 @@ public class Game implements Runnable {
 		// pero la casilla destino est ocupada, vuelva a preguntarle
 		// al cliente una nueva casilla a elegir 
 		// NOTA: Tambien validar saltar turno
-		
-		
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
 
-			if(ficha != null && tablero.MeterFichaIncio(ficha)) {
-				return;
-			} else {
-				
+			if (ficha == null || !tablero.MeterFichaIncio(ficha)) {
+
 				do {
 					ficha = waitEscogerFicha();
-				} while (!AvanzarFicha(ficha, nmovimientos));							
+				} while (!AvanzarFicha(ficha, nmovimientos));			
 			}
+			return;
 		}
 
-		if (vuelta > 1) {
-			if (nmovimientos > 0) {
-				Ficha ficha = waitEscogerFicha();
-				do {
-					ficha = waitEscogerFicha();
-				} while (!AvanzarFicha(ficha, nmovimientos));						
+			if (vuelta > 1) {
+				if (nmovimientos > 0) {
+					Ficha ficha;
+					do {
+						ficha = waitEscogerFicha();
+					} while (!AvanzarFicha(ficha, nmovimientos));
+				}
 			}
+
+			// Pagar apuesta
+			if (nmovimientos == 0) {
+				JugadorPagarApuesta(cantidadAPag);
+			}
+
 		}
-
-		// Pagar apuesta
-		if (nmovimientos == 0) {
-			JugadorPagarApuesta(cantidadAPag);
-		}
-
-	}
-
-	// Turnos
+		// Turnos
 	public void SiguienteTurno() {
 
 		int next = getNextPlayer(currentPlayer);
