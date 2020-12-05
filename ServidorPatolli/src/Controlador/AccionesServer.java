@@ -215,11 +215,6 @@ public class AccionesServer implements AccionesGame, Observer {
 	}
 
 	@Override
-	public void sendPlayerEliminated() {
-
-	}
-
-	@Override
 	public void notifyPlayer(Jugador player, String msg, boolean pauseGame, boolean ERROR) {
 		AccionNotifyMessage Accion = new AccionNotifyMessage();
 		Accion.ERROR = ERROR;
@@ -228,7 +223,7 @@ public class AccionesServer implements AccionesGame, Observer {
 		Accion.player = player;
 		server.sendToClients(Accion, player.ID);
 
-		if (pauseGame){
+		if (pauseGame) {
 			game.waiting = true;
 
 			while (game.waiting) {
@@ -240,6 +235,13 @@ public class AccionesServer implements AccionesGame, Observer {
 			return;
 		}
 
+	}
+
+	@Override
+	public void notifyPlayers(String msg, boolean ERROR) {
+		for (Jugador player : Jugadores) {
+			notifyPlayer(player, msg, false, ERROR);
+		}
 	}
 
 	// Observer
@@ -277,7 +279,7 @@ public class AccionesServer implements AccionesGame, Observer {
 				AccionActual = (AccionSendEscogerFicha) arg;
 				game.waiting = false;
 			} else if (((AccionControlador) arg).Accion == enmAcciones.sendTirarDados) {
-				game.waiting = false;			
+				game.waiting = false;
 			} else if (((AccionControlador) arg).Accion == enmAcciones.sendResumeGame) {
 				game.waiting = false;
 			}

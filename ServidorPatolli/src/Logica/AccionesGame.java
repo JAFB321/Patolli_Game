@@ -9,6 +9,6 @@ public interface AccionesGame {
     public boolean waitPagarApuesta(); 
     
     public void sendNextTurn();
-    public void sendPlayerEliminated();
 	public void notifyPlayer(Jugador player, String msg, boolean pauseGame, boolean ERROR);
+	public void notifyPlayers(String msg, boolean ERROR);
 }

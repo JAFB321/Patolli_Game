@@ -65,8 +65,12 @@ public class Game implements Runnable {
 	public void run() {
 		while (Estado != EstadoJuego.JuegoFinalizado) {
 			JugarTurno();
+			if(ValidarFinJuego()) continue;
 			SiguienteTurno();
 		}
+		
+		acciones.notifyPlayers("El juego ha finalizado", false);		
+		// ?? 
 
 	}
 
@@ -85,6 +89,18 @@ public class Game implements Runnable {
 
 		Estado = Estado.JugadorTurno;
 		acciones.sendNextTurn();
+	}
+	
+	public boolean ValidarFinJuego(){
+		int activePlayers = 0;
+		for (Jugador player : players) {
+			if(!player.Eliminado) activePlayers++;
+		}
+		if(activePlayers < 2){
+			Estado = EstadoJuego.JuegoFinalizado;
+			return true;
+		}
+		return false;
 	}
 
 	public int getNextPlayer(int current) {
@@ -105,11 +121,11 @@ public class Game implements Runnable {
 	
 	public void JugarTurno() {
 		Estado = EstadoJuego.JugadorMoviendose;
-
+		
 		acciones.waitTirarDados();
 
 		boolean[] lanzada = dados.LanzarDados();
-
+		
 		nmovimientos = 0;
 		for (boolean a : lanzada) {
 			if (a) {
@@ -127,10 +143,7 @@ public class Game implements Runnable {
 		}
 
 		acciones.notifyPlayer(getCurrentPlayer(), "Tus cañas han caido en " + nmovimientos, true, false);
-
-		// Enviar info acerca de los siguientes eventos:
-		// Mostrar mensaje cuando un jugador pague apuesta		
-		
+			
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
 			boolean IngresoFicha = false;
@@ -200,7 +213,7 @@ public class Game implements Runnable {
 	public void EliminarJugadorActual() {
 		getCurrentPlayer().Eliminado = true;
 		tablero.QuitarFichasJugador(getCurrentPlayer());
-		acciones.sendPlayerEliminated();
+		acciones.notifyPlayers("El jugador "+(getCurrentPlayer().Nombre)+" ha sido eliminado", false);
 	}
 
 	// Eventos del juego
