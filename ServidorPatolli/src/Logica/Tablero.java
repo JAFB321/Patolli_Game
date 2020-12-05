@@ -26,9 +26,20 @@ public class Tablero implements Serializable {
 	}
 
 	private boolean esRedonda(int pos) {
-		int[] triangulares = {2, 14, 19, 31, 36, 48, 53, 65};
-		for (int i = 0; i < triangulares.length; i++) {
-			if (triangulares[i] == pos) {
+		int[] redondas = {67, 0, 16, 17, 33, 34, 50, 51};
+		for (int i = 0; i < redondas.length; i++) {
+			if (redondas[i] == pos) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean esCentral(int pos) {
+		int[] centrales = {9, 25, 42, 59};
+		for (int i = 0; i < centrales.length; i++) {
+			if (centrales[i] == pos) {
 				return true;
 			}
 		}
@@ -42,10 +53,17 @@ public class Tablero implements Serializable {
 		for (int i = 0; i < casillas.length; i++) {
 			casillas[i] = new Casilla(i);
 
-			if (!esTriangular(i)) {
-				casillas[i].Tipo = "N";
-			} else {
+			if (esTriangular(i)) {
 				casillas[i].Tipo = "T";
+			}
+			else if (esRedonda(i)) {
+				casillas[i].Tipo = "R";
+			}
+			else if (esCentral(i)) {
+				casillas[i].Tipo = "C";
+			}
+			else {
+				casillas[i].Tipo = "N";
 			}
 
 			if (i > 0) {
@@ -87,7 +105,7 @@ public class Tablero implements Serializable {
 			new Casilla[]{casillas[43], casillas[26]},
 			new Casilla[]{casillas[60], casillas[43]}
 		};
-		
+
 		return arr;
 	}
 
@@ -98,7 +116,7 @@ public class Tablero implements Serializable {
 			casillaInicial.ocupada = true;
 			ficha.enTablero = true;
 			ficha.casilla = casillaInicial;
-			
+
 			return true;
 		}
 
@@ -125,7 +143,7 @@ public class Tablero implements Serializable {
 
 	public Ficha getFichaAdelante(Jugador player) {
 
-		Casilla inicial = player.CasillaInicial;		
+		Casilla inicial = player.CasillaInicial;
 		while (true) {
 			if (inicial.prev.ficha != null) {
 				if (inicial.prev.ficha.player.ID.equals(player.ID)) {
@@ -133,7 +151,7 @@ public class Tablero implements Serializable {
 				}
 			}
 			inicial = inicial.prev;
-			if (inicial.prev.pos == player.CasillaInicial.pos-1) {
+			if (inicial.prev.pos == player.CasillaInicial.pos - 1) {
 				break;
 			}
 		}

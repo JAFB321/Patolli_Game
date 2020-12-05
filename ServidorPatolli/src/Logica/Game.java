@@ -203,6 +203,11 @@ public class Game implements Runnable {
 					acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de "+(cantidadAPag * 2), true, false);
 					JugadorPagarApuesta(cantidadAPag * 2);
 					break;
+					
+				case "R":
+					acciones.notifyPlayer(getCurrentPlayer(), "Has caido en una casilla redonda! Felicidades! Lanzas las cañas de nuevo!", true, false);
+					EscogerYAvanzarFicha();
+					break;
 
 				default:
 			}
