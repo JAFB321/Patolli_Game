@@ -118,7 +118,7 @@ public class Game implements Runnable {
 		}
 
 		// enviarle al cliente cuanto cayó
-		if (vuelta % 2 == 1) {
+		if (vuelta == 1) {
 			nmovimientos = 1;
 		}
 
@@ -132,25 +132,31 @@ public class Game implements Runnable {
 		// Mostrar mensaje cuando un jugador pague apuesta		
 		
 		if (nmovimientos == 1) {
-			acciones.notifyPlayer(getCurrentPlayer(), "Se ingresara una de tus fichas al tablero", true, false);
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
-
-			if (ficha == null || !tablero.MeterFichaIncio(ficha)) {
-				acciones.notifyPlayer(getCurrentPlayer(), "Tu casilla inicial esta ocupada, elige otra ficha para mover", true, true);
-
+			boolean IngresoFicha = false;
+			
+			if(ficha != null){
+				acciones.notifyPlayer(getCurrentPlayer(), "Se ingresara una de tus fichas al tablero", true, false);
+				IngresoFicha = tablero.MeterFichaIncio(ficha);
+				if(!IngresoFicha){
+					acciones.notifyPlayer(getCurrentPlayer(), "Tu casilla inicial esta ocupada, elige otra ficha para mover", true, true);
+				}
+			}
+			
+			if (!IngresoFicha) {				
 				EscogerYAvanzarFicha();
 			}
-			return;
 		}
 
 		if (vuelta > 1) {
-			if (nmovimientos > 0) {
+			if (nmovimientos > 1) {
 				EscogerYAvanzarFicha();
 			}
 		}
 
 		// Pagar apuesta
 		if (nmovimientos == 0) {
+			acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de "+cantidadAPag, true, false);
 			JugadorPagarApuesta(cantidadAPag);
 		}
 
@@ -181,6 +187,7 @@ public class Game implements Runnable {
 					break;
 
 				case "T":
+					acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de "+(cantidadAPag * 2), true, false);
 					JugadorPagarApuesta(cantidadAPag * 2);
 					break;
 
