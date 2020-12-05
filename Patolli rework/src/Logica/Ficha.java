@@ -14,5 +14,6 @@ public class Ficha implements  Serializable{
     public Color colorf;
     public boolean eliminada = false;
     public boolean enTablero = false;
+	public boolean terminoVuelta = false;
     public Casilla casilla;
 }

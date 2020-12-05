@@ -65,11 +65,13 @@ public class Game implements Runnable {
 	public void run() {
 		while (Estado != EstadoJuego.JuegoFinalizado) {
 			JugarTurno();
-			if(ValidarFinJuego()) continue;
+			if (ValidarFinJuego()) {
+				continue;
+			}
 			SiguienteTurno();
 		}
-		
-		acciones.notifyPlayers("El juego ha finalizado", false);		
+
+		acciones.notifyPlayers("El juego ha finalizado", false);
 		// ?? 
 
 	}
@@ -90,13 +92,15 @@ public class Game implements Runnable {
 		Estado = Estado.JugadorTurno;
 		acciones.sendNextTurn();
 	}
-	
-	public boolean ValidarFinJuego(){
+
+	public boolean ValidarFinJuego() {
 		int activePlayers = 0;
 		for (Jugador player : players) {
-			if(!player.Eliminado) activePlayers++;
+			if (!player.Eliminado) {
+				activePlayers++;
+			}
 		}
-		if(activePlayers < 2){
+		if (activePlayers < 2) {
 			Estado = EstadoJuego.JuegoFinalizado;
 			return true;
 		}
@@ -118,14 +122,13 @@ public class Game implements Runnable {
 		return null;
 	}
 
-	
 	public void JugarTurno() {
 		Estado = EstadoJuego.JugadorMoviendose;
-		
+
 		acciones.waitTirarDados();
 
 		boolean[] lanzada = dados.LanzarDados();
-		
+
 		nmovimientos = 0;
 		for (boolean a : lanzada) {
 			if (a) {
@@ -143,20 +146,20 @@ public class Game implements Runnable {
 		}
 
 		acciones.notifyPlayer(getCurrentPlayer(), "Tus cañas han caido en " + nmovimientos, true, false);
-			
+
 		if (nmovimientos == 1) {
 			Ficha ficha = getCurrentPlayer().getFichaDisponible();
 			boolean IngresoFicha = false;
-			
-			if(ficha != null){
+
+			if (ficha != null) {
 				acciones.notifyPlayer(getCurrentPlayer(), "Se ingresara una de tus fichas al tablero", true, false);
 				IngresoFicha = tablero.MeterFichaIncio(ficha);
-				if(!IngresoFicha){
+				if (!IngresoFicha) {
 					acciones.notifyPlayer(getCurrentPlayer(), "Tu casilla inicial esta ocupada, elige otra ficha para mover", true, true);
 				}
 			}
-			
-			if (!IngresoFicha) {				
+
+			if (!IngresoFicha) {
 				EscogerYAvanzarFicha();
 			}
 		}
@@ -169,7 +172,7 @@ public class Game implements Runnable {
 
 		// Pagar apuesta
 		if (nmovimientos == 0) {
-			acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de "+cantidadAPag, true, false);
+			acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de " + cantidadAPag, true, false);
 			JugadorPagarApuesta(cantidadAPag);
 		}
 
@@ -192,33 +195,40 @@ public class Game implements Runnable {
 	}
 
 	public boolean AvanzarFicha(Ficha ficha, int nmovimientos) {
-		boolean seMovio = tablero.AvanzarFicha(ficha, nmovimientos);
+		Tablero.strMovimientoFicha movimiento = tablero.AvanzarFicha(ficha, nmovimientos);
 
-		if (seMovio) {
+		if (movimiento.seMovio) {
 			switch (ficha.casilla.Tipo) {
 				case "N":
 					break;
 
 				case "T":
-					acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de "+(cantidadAPag * 2), true, false);
+					acciones.notifyPlayer(getCurrentPlayer(), "Pagaras una apuesta de " + (cantidadAPag * 2), true, false);
 					JugadorPagarApuesta(cantidadAPag * 2);
 					break;
-					
+
 				case "R":
 					acciones.notifyPlayer(getCurrentPlayer(), "Has caido en una casilla redonda! Felicidades! Lanzas las cañas de nuevo!", true, false);
 					EscogerYAvanzarFicha();
 					break;
 
+				case "C":
+					if(movimiento.fichaEliminada != null){
+						acciones.notifyPlayer(movimiento.fichaEliminada.player, "El jugador "+getCurrentPlayer().Nombre+" te ha eliminado una ficha", false, false);
+						acciones.notifyPlayer(getCurrentPlayer(), "Has eliminado una ficha de: "+movimiento.fichaEliminada.player.Nombre, true, false);
+					}
+					break;
+
 				default:
 			}
 		}
-		return seMovio;
+		return movimiento.seMovio;
 	}
 
 	public void EliminarJugadorActual() {
 		getCurrentPlayer().Eliminado = true;
 		tablero.QuitarFichasJugador(getCurrentPlayer());
-		acciones.notifyPlayers("El jugador "+(getCurrentPlayer().Nombre)+" ha sido eliminado", false);
+		acciones.notifyPlayers("El jugador " + (getCurrentPlayer().Nombre) + " ha sido eliminado", false);
 	}
 
 	// Eventos del juego

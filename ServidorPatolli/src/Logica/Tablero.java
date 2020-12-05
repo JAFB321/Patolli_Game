@@ -4,6 +4,21 @@ import java.io.Serializable;
 
 public class Tablero implements Serializable {
 
+	public class strMovimientoFicha implements Serializable {
+
+		public boolean seMovio;
+		public Casilla origen;
+		public Casilla destino;
+		public Ficha fichaEliminada;
+
+		public strMovimientoFicha(boolean seMovio, Casilla origen, Casilla destino, Ficha fichaEliminada) {
+			this.seMovio = seMovio;
+			this.origen = origen;
+			this.destino = destino;
+			this.fichaEliminada = fichaEliminada;
+		}
+	}
+
 	public Casilla[] casillas;
 
 	public Tablero() {
@@ -55,14 +70,11 @@ public class Tablero implements Serializable {
 
 			if (esTriangular(i)) {
 				casillas[i].Tipo = "T";
-			}
-			else if (esRedonda(i)) {
+			} else if (esRedonda(i)) {
 				casillas[i].Tipo = "R";
-			}
-			else if (esCentral(i)) {
+			} else if (esCentral(i)) {
 				casillas[i].Tipo = "C";
-			}
-			else {
+			} else {
 				casillas[i].Tipo = "N";
 			}
 
@@ -76,12 +88,16 @@ public class Tablero implements Serializable {
 		casillas[casillas.length - 1].next = casillas[0];
 	}
 
-	public boolean AvanzarFicha(Ficha ficha, int mov) {
+	public strMovimientoFicha AvanzarFicha(Ficha ficha, int mov) {
+		Casilla casilla = null;
+		Casilla casillaNext = null;
+
 		if (ficha.enTablero) {
-			Casilla casilla = ficha.casilla;
-			Casilla casillaNext = casilla.getNext(mov);
+			casilla = ficha.casilla;
+			casillaNext = casilla.getNext(mov);
 
 			if (!casillaNext.ocupada) {
+
 				casilla.ficha = null;
 				casilla.ocupada = false;
 
@@ -89,11 +105,26 @@ public class Tablero implements Serializable {
 				casillaNext.ocupada = true;
 				ficha.casilla = casillaNext;
 
-				return true;
+				return new strMovimientoFicha(true, casilla, casillaNext, null);
+			} 
+			else if (casillaNext.Tipo.equals("C") && casillaNext.ficha != null && !casillaNext.ficha.player.ID.equals(ficha.player.ID)) {
+				Ficha fichaEliminada = casillaNext.ficha;
+				fichaEliminada.casilla = null;
+				fichaEliminada.enTablero = false;
+				fichaEliminada.eliminada = true;
+				
+				casilla.ficha = null;
+				casilla.ocupada = false;
+
+				casillaNext.ficha = ficha;
+				casillaNext.ocupada = true;
+				ficha.casilla = casillaNext;
+
+				return new strMovimientoFicha(true, casilla, casillaNext, fichaEliminada);
 			}
 		}
 
-		return false;
+		return new strMovimientoFicha(false, casilla, null, null);
 	}
 
 	// Para fichas de los jugadores
