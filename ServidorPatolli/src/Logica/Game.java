@@ -70,70 +70,7 @@ public class Game implements Runnable {
 
 	}
 
-	public Jugador getCurrentPlayer() {
-		if (currentPlayer >= 0 && currentPlayer < players.length) {
-			return players[currentPlayer];
-		}
-		return null;
-	}
-
-	public void JugarTurno() {
-		Estado = EstadoJuego.JugadorMoviendose;
-
-		acciones.waitTirarDados();
-
-		boolean[] lanzada = dados.LanzarDados();
-
-		nmovimientos = 0;
-		for (boolean a : lanzada) {
-			if (a) {
-				nmovimientos++;
-			}
-		}
-
-		// enviarle al cliente cuanto cayó
-		if (vuelta % 2 == 1) {
-			nmovimientos = 1;
-		}
-
-		if (nmovimientos == 5) {
-			nmovimientos = 10;
-		}
-		
-		acciones.notifyPlayer(getCurrentPlayer(), "Tus cañas han caido en "+nmovimientos, true, false);
-		
-		// Enviar info acerca de los siguientes eventos:
-		// - Mostrar mensaje de que su tirada fue 1 y se metera una ficha al tablero
-		// - Mostrar mensaje cuando la ficha no se pueda mover y tenga que elegir otra		
-		if (nmovimientos == 1) {
-			Ficha ficha = getCurrentPlayer().getFichaDisponible();
-			
-			if (ficha == null || !tablero.MeterFichaIncio(ficha)) {
-
-				do {
-					ficha = waitEscogerFicha();
-				} while (!AvanzarFicha(ficha, nmovimientos));
-			}
-			return;
-		}
-
-		if (vuelta > 1) {
-			if (nmovimientos > 0) {
-				Ficha ficha;
-				do {
-					ficha = waitEscogerFicha();
-				} while (!AvanzarFicha(ficha, nmovimientos));
-			}
-		}
-
-		// Pagar apuesta
-		if (nmovimientos == 0) {
-			JugadorPagarApuesta(cantidadAPag);
-		}
-
-	}
 	// Turnos
-
 	public void SiguienteTurno() {
 
 		int next = getNextPlayer(currentPlayer);
@@ -158,7 +95,83 @@ public class Game implements Runnable {
 		}
 	}
 
+	public Jugador getCurrentPlayer() {
+		if (currentPlayer >= 0 && currentPlayer < players.length) {
+			return players[currentPlayer];
+		}
+		return null;
+	}
+
+	
+	public void JugarTurno() {
+		Estado = EstadoJuego.JugadorMoviendose;
+
+		acciones.waitTirarDados();
+
+		boolean[] lanzada = dados.LanzarDados();
+
+		nmovimientos = 0;
+		for (boolean a : lanzada) {
+			if (a) {
+				nmovimientos++;
+			}
+		}
+
+		// enviarle al cliente cuanto cayó
+		if (vuelta % 2 == 1) {
+			nmovimientos = 1;
+		}
+
+		if (nmovimientos == 5) {
+			nmovimientos = 10;
+		}
+
+		acciones.notifyPlayer(getCurrentPlayer(), "Tus cañas han caido en " + nmovimientos, true, false);
+
+		// Enviar info acerca de los siguientes eventos:
+		// Mostrar mensaje cuando un jugador pague apuesta		
+		
+		if (nmovimientos == 1) {
+			acciones.notifyPlayer(getCurrentPlayer(), "Se ingresara una de tus fichas al tablero", true, false);
+			Ficha ficha = getCurrentPlayer().getFichaDisponible();
+
+			if (ficha == null || !tablero.MeterFichaIncio(ficha)) {
+				acciones.notifyPlayer(getCurrentPlayer(), "Tu casilla inicial esta ocupada, elige otra ficha para mover", true, true);
+
+				EscogerYAvanzarFicha();
+			}
+			return;
+		}
+
+		if (vuelta > 1) {
+			if (nmovimientos > 0) {
+				EscogerYAvanzarFicha();
+			}
+		}
+
+		// Pagar apuesta
+		if (nmovimientos == 0) {
+			JugadorPagarApuesta(cantidadAPag);
+		}
+
+	}
+
 	// Acciones del juego
+	public boolean EscogerYAvanzarFicha() {
+		Ficha ficha;
+		boolean Avanzo = false;
+		do {
+			ficha = waitEscogerFicha();
+			Avanzo = AvanzarFicha(ficha, nmovimientos);
+			if (!Avanzo) {
+				acciones.notifyPlayer(getCurrentPlayer(), "La casilla donde quieres moverte esta ocupada, elige otra ficha para mover", true, true);
+			}
+
+		} while (!Avanzo);
+
+		return true;
+	}
+
 	public boolean AvanzarFicha(Ficha ficha, int nmovimientos) {
 		boolean seMovio = tablero.AvanzarFicha(ficha, nmovimientos);
 
