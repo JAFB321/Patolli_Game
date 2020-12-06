@@ -184,10 +184,12 @@ public class Game implements Runnable {
 		boolean Avanzo = false;
 		do {
 			ficha = waitEscogerFicha();
-			Avanzo = AvanzarFicha(ficha, nmovimientos);
-			if (!Avanzo) {
-				acciones.notifyPlayer(getCurrentPlayer(), "La casilla donde quieres moverte esta ocupada, elige otra ficha para mover", true, true);
+			
+			if(ficha == null){
+				return false;
 			}
+			
+			Avanzo = AvanzarFicha(ficha, nmovimientos);
 
 		} while (!Avanzo);
 
@@ -195,9 +197,16 @@ public class Game implements Runnable {
 	}
 
 	public boolean AvanzarFicha(Ficha ficha, int nmovimientos) {
+
 		Tablero.strMovimientoFicha movimiento = tablero.AvanzarFicha(ficha, nmovimientos);
 
 		if (movimiento.seMovio) {
+
+			if (movimiento.llegoMeta) {
+				acciones.notifyPlayer(getCurrentPlayer(), "Felicidades!! Tu ficha ha llegado a la meta!!", true, false);
+				return true;
+			}
+
 			switch (ficha.casilla.Tipo) {
 				case "N":
 					break;
@@ -213,15 +222,22 @@ public class Game implements Runnable {
 					break;
 
 				case "C":
-					if(movimiento.fichaEliminada != null){
-						acciones.notifyPlayer(movimiento.fichaEliminada.player, "El jugador "+getCurrentPlayer().Nombre+" te ha eliminado una ficha", false, false);
-						acciones.notifyPlayer(getCurrentPlayer(), "Has eliminado una ficha de: "+movimiento.fichaEliminada.player.Nombre, true, false);
+					if (movimiento.fichaEliminada != null) {
+						acciones.notifyPlayer(movimiento.fichaEliminada.player, "El jugador " + getCurrentPlayer().Nombre + " te ha eliminado una ficha", false, false);
+						acciones.notifyPlayer(getCurrentPlayer(), "Has eliminado una ficha de: " + movimiento.fichaEliminada.player.Nombre, true, false);
 					}
 					break;
 
 				default:
 			}
+		} else {
+			if (movimiento.sePaso) {
+				acciones.notifyPlayer(getCurrentPlayer(), "Tu ficha se paso de la meta, elige otra ficha para mover", true, true);
+			} else {
+				acciones.notifyPlayer(getCurrentPlayer(), "La casilla donde quieres moverte esta ocupada, elige otra ficha para mover", true, true);
+			}
 		}
+
 		return movimiento.seMovio;
 	}
 

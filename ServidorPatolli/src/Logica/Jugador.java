@@ -43,7 +43,7 @@ public class Jugador implements Serializable{
     
     public Ficha getFichaDisponible(){
         for (Ficha ficha : fichas) {
-            if(!ficha.enTablero) return ficha;
+            if(!ficha.enTablero && !ficha.eliminada && !ficha.llegoMeta) return ficha;
         }
         
         return null;

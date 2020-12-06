@@ -74,13 +74,17 @@ public class ControladorGUI {
     }	
 	
 	public String SeleccionarFicha(Ficha[] fichas, int nmovimientos){
-		String[] opcionesID = new String[fichas.length];
+		String[] opcionesID = new String[fichas.length+1];
+		
 		for (int i = 0; i < fichas.length; i++) {
 			int posInicial = fichas[i].player.CasillaInicial.pos;
 			int posActual = fichas[i].casilla.pos;
 			opcionesID[i] = "Ficha "+(i+1)+" - Posicion: "+(posActual-posInicial+1);
 		}
+		opcionesID[opcionesID.length-1] = "Saltar Turno";
 		String opcionSel = (String)(JOptionPane.showInputDialog(FrameTablerito, "Elija la ficha a mover "+nmovimientos+" lugares", "Es su turno", 1, null, opcionesID, opcionesID[0]));
+		
+		if(opcionSel.equals("Saltar Turno")) return "";
 		
 		for (int i = 0; i < opcionesID.length; i++) {
 			if(opcionesID[i].equals(opcionSel)){

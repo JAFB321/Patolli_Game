@@ -11,12 +11,25 @@ public class Tablero implements Serializable {
 		public Casilla destino;
 		public Ficha fichaEliminada;
 
+		public boolean llegoMeta;
+		public boolean sePaso;
+
 		public strMovimientoFicha(boolean seMovio, Casilla origen, Casilla destino, Ficha fichaEliminada) {
 			this.seMovio = seMovio;
 			this.origen = origen;
 			this.destino = destino;
 			this.fichaEliminada = fichaEliminada;
 		}
+
+		public strMovimientoFicha(boolean seMovio, Casilla origen, Casilla destino, Ficha fichaEliminada, boolean llegoMeta, boolean sePaso) {
+			this.seMovio = seMovio;
+			this.origen = origen;
+			this.destino = destino;
+			this.fichaEliminada = fichaEliminada;
+			this.llegoMeta = llegoMeta;
+			this.sePaso = sePaso;
+		}
+
 	}
 
 	public Casilla[] casillas;
@@ -52,7 +65,7 @@ public class Tablero implements Serializable {
 	}
 
 	private boolean esCentral(int pos) {
-		int[] centrales = {9, 25, 42, 59, 26};
+		int[] centrales = {8, 25, 42, 59};
 		for (int i = 0; i < centrales.length; i++) {
 			if (centrales[i] == pos) {
 				return true;
@@ -98,20 +111,40 @@ public class Tablero implements Serializable {
 
 			if (!casillaNext.ocupada) {
 
-				casilla.ficha = null;
-				casilla.ocupada = false;
+				if (casillaNext == ficha.player.CasillaFinal) {
+					// llega a la meta
+					casilla.ficha = null;
+					casilla.ocupada = false;
 
-				casillaNext.ficha = ficha;
-				casillaNext.ocupada = true;
-				ficha.casilla = casillaNext;
+					ficha.casilla = null;
+					ficha.enTablero = false;
+					ficha.llegoMeta = true;
 
-				return new strMovimientoFicha(true, casilla, casillaNext, null);
-			} 
-			else if (casillaNext.Tipo.equals("C") && casillaNext.ficha != null && !casillaNext.ficha.player.ID.equals(ficha.player.ID)) {
+					return new strMovimientoFicha(true, casilla, casillaNext, null, true, false);
+				} 
+				else if (casilla.MovimientoCruzaLaMeta(ficha, mov)) {
+					// se pasa de la meta (no avanza)
+					return new strMovimientoFicha(false, casilla, null, null, false, true);
+				} 
+				else { 
+					// Avanza normalmente
+					casilla.ficha = null;
+					casilla.ocupada = false;
+
+					casillaNext.ficha = ficha;
+					casillaNext.ocupada = true;
+					ficha.casilla = casillaNext;
+
+					return new strMovimientoFicha(true, casilla, casillaNext, null);
+				}
+
+			} else if (casillaNext.Tipo.equals("C") && casillaNext.ficha != null && !casillaNext.ficha.player.ID.equals(ficha.player.ID)) {
+				// cae en casilla central y se come a una ficha enemiga
 				Ficha fichaEliminada = casillaNext.ficha;
 				fichaEliminada.casilla = null;
 				fichaEliminada.enTablero = false;
-				
+				fichaEliminada.eliminada = true;
+
 				casilla.ficha = null;
 				casilla.ocupada = false;
 
