@@ -103,7 +103,8 @@ public class AccionesServer implements AccionesGame, Observer {
 	}
 
 	// Manejar Clientes Juego
-	private void sendGameState() {
+	@Override
+	public void sendGameState() {
 		// Enviar a los jugadores
 		String[] IDs = new String[Jugadores.size()];
 		for (int i = 0; i < IDs.length; i++) {

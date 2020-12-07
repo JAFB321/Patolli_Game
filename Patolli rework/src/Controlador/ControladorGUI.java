@@ -13,8 +13,6 @@ import Logica.Ficha;
 import Logica.GameState;
 import Logica.Jugador;
 import java.awt.BorderLayout;
-import java.awt.TrayIcon;
-import java.lang.reflect.Array;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -84,6 +82,7 @@ public class ControladorGUI {
 		opcionesID[opcionesID.length-1] = "Saltar Turno";
 		String opcionSel = (String)(JOptionPane.showInputDialog(FrameTablerito, "Elija la ficha a mover "+nmovimientos+" lugares", "Es su turno", 1, null, opcionesID, opcionesID[0]));
 		
+		if(opcionSel == null) return "";
 		if(opcionSel.equals("Saltar Turno")) return "";
 		
 		for (int i = 0; i < opcionesID.length; i++) {

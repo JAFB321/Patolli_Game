@@ -201,7 +201,9 @@ public class Game implements Runnable {
 		Tablero.strMovimientoFicha movimiento = tablero.AvanzarFicha(ficha, nmovimientos);
 
 		if (movimiento.seMovio) {
-
+			
+			acciones.sendGameState();
+			
 			if (movimiento.llegoMeta) {
 				acciones.notifyPlayer(getCurrentPlayer(), "Felicidades!! Tu ficha ha llegado a la meta!!", true, false);
 				return true;
