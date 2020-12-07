@@ -20,12 +20,32 @@ public class Jugador implements Serializable {
 	public Casilla CasillaFinal;
 
 	public boolean PagarApuesta(int cantidadPagar) {
-		if (cantidad >= cantidadPagar) {
+		if (cantidad > cantidadPagar) {
 			cantidad -= cantidadPagar;
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public boolean checkFichasAcabadas() {
+		int eliminadas = 0;
+		for (Ficha ficha : fichas) {
+			if (ficha.eliminada) {
+				eliminadas++;
+			}
+		}
+		return eliminadas == fichas.length;
+	}
+
+	public boolean checkFichasCruzaronMeta() {
+		int cruzadasMeta = 0;
+		for (Ficha ficha : fichas) {
+			if (ficha.llegoMeta) {
+				cruzadasMeta++;
+			}
+		}
+		return cruzadasMeta == (fichas.length - getFichasEliminadas().length);
 	}
 
 	public Ficha[] getFichasEnTablero() {
@@ -36,6 +56,16 @@ public class Jugador implements Serializable {
 			}
 		}
 		return entablero.toArray(new Ficha[0]);
+	}
+
+	public Ficha[] getFichasEliminadas() {
+		ArrayList<Ficha> eliminadas = new ArrayList<Ficha>();
+		for (Ficha ficha : fichas) {
+			if (ficha.eliminada) {
+				eliminadas.add(ficha);
+			}
+		}
+		return eliminadas.toArray(new Ficha[0]);
 	}
 
 	public Ficha[] getFichasDisponibles() {

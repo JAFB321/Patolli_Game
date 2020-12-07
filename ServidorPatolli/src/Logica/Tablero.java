@@ -199,6 +199,9 @@ public class Tablero implements Serializable {
 				if (casilla.ficha.ID == ficha.ID) {
 					casilla.ficha = null;
 					casilla.ocupada = false;
+					ficha.casilla = null;
+					ficha.enTablero = false;
+					ficha.eliminada = true;
 				}
 			}
 		}

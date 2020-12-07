@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Tablerito extends javax.swing.JFrame {
 
@@ -15,6 +16,12 @@ public class Tablerito extends javax.swing.JFrame {
 
 	GameState state;
 	Jugador ClientPlayer;
+
+	JLabel[] lblJugadores;
+	JLabel[] lblMontos;
+	JLabel[] lblFichasJuego;
+	JLabel[] lblFichasSinJugar;
+	JLabel[] lblIconos;
 
 	public Tablerito(AccionesGUI Acciones) {
 		//this.cantidadAPag = cantidadApag;
@@ -28,7 +35,22 @@ public class Tablerito extends javax.swing.JFrame {
 		this.add(t);
 		tab = t;
 		SetUserImage();
+		
+		lblBanco.setVisible(false);
 
+		lblJugadores = new JLabel[]{lblJugador1, lblJugador2, lblJugador3, lblJugador4};
+		lblMontos = new JLabel[]{lblMonto1, lblMonto2, lblMonto3, lblMonto4};
+		lblFichasJuego = new JLabel[]{lblFichasJuego1, lblFichasJuego2, lblFichasJuego3, lblFichasJuego4};
+		lblFichasSinJugar = new JLabel[]{lblFichasSinJugar1, lblFichasSinJugar2, lblFichasSinJugar3, lblFichasSinJugar4};
+		lblIconos = new JLabel[]{lblIcono1, lblIcono2, lblIcono3, lblIcono4};
+
+		for (int i = 0; i < 4; i++) {
+			lblJugadores[i].setVisible(false);
+			lblMontos[i].setVisible(false);
+			lblFichasJuego[i].setVisible(false);
+			lblFichasSinJugar[i].setVisible(false);
+			lblIconos[i].setVisible(false);
+		}
 	}
 
 	// Manejar Juego GUI
@@ -38,59 +60,34 @@ public class Tablerito extends javax.swing.JFrame {
 
 		setPlayersInfo();
 		tab.Refresh(state);
+		lblBanco.setVisible(true);
+		lblBanco.setText("Banco: "+state.Banco);
 	}
 
 	private void SetUserImage() {
 		ImageIcon usuario1 = new ImageIcon(getClass().getResource("/imagen/Usuario.png"));
-		ImageIcon tamaño1 = new ImageIcon(usuario1.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT));
-		jLabel2.setIcon(tamaño1);
-
-		ImageIcon usuario2 = new ImageIcon(getClass().getResource("/imagen/Usuario.png"));
-		ImageIcon tamaño2 = new ImageIcon(usuario1.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_DEFAULT));
-		jLabel5.setIcon(tamaño1);
-
-		ImageIcon usuario3 = new ImageIcon(getClass().getResource("/imagen/Usuario.png"));
-		ImageIcon tamaño3 = new ImageIcon(usuario1.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), Image.SCALE_DEFAULT));
-		jLabel3.setIcon(tamaño1);
-
-		ImageIcon usuario4 = new ImageIcon(getClass().getResource("/imagen/Usuario.png"));
-		ImageIcon tamaño4 = new ImageIcon(usuario1.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
-		jLabel4.setIcon(tamaño1);
+		ImageIcon tamaño1 = new ImageIcon(usuario1.getImage().getScaledInstance(lblIcono1.getWidth(), lblIcono1.getHeight(), Image.SCALE_DEFAULT));
+		lblIcono1.setIcon(tamaño1);
+		lblIcono2.setIcon(tamaño1);
+		lblIcono3.setIcon(tamaño1);
+		lblIcono4.setIcon(tamaño1);
 	}
 
 	private void setPlayersInfo() {
-		if (state.players.length >= 1) {
-			lblJugador1.setText(state.players[0].Nombre);
-			lblMonto1.setText(state.players[0].cantidad + "");
-			lblMonto1.setText("Monto del jugador: "+(state.players[0].cantidad+""));
-			lblFichasJuego1.setText("Fichas en juego: "+(state.players[0].getFichasEnTablero().length + ""));
-			lblFichasSinJugar1.setText("Fichas sin jugar: "+(state.players[0].getFichasDisponibles().length + ""));
-			
+
+		for (int i = 0; i < state.players.length; i++) {
+			lblJugadores[i].setVisible(true);
+			lblMontos[i].setVisible(true);
+			lblFichasJuego[i].setVisible(true);
+			lblFichasSinJugar[i].setVisible(true);
+			lblIconos[i].setVisible(true);
+
+			lblJugadores[i].setText(state.players[i].Nombre);
+			lblMontos[i].setText("Monto del jugador: " + (state.players[i].cantidad + ""));
+			lblFichasJuego[i].setText("Fichas en juego: " + (state.players[i].getFichasEnTablero().length + ""));
+			lblFichasSinJugar[i].setText("Fichas sin jugar: " + (state.players[i].getFichasDisponibles().length + ""));
 		}
 
-		if (state.players.length >= 2) {
-			lblJugador2.setText(state.players[1].Nombre);
-			lblMonto2.setText(state.players[1].cantidad + "");
-			lblMonto2.setText("Monto del jugador: "+(state.players[1].cantidad+""));
-			lblFichasJuego2.setText("Fichas en juego: "+(state.players[1].getFichasEnTablero().length + ""));
-			lblFichasSinJugar2.setText("Fichas sin jugar: "+(state.players[1].getFichasDisponibles().length + ""));
-		}
-
-		if (state.players.length >= 3) {
-			lblJugador3.setText(state.players[2].Nombre);
-			lblMonto3.setText(state.players[2].cantidad + "");
-			lblMonto3.setText("Monto del jugador: "+(state.players[2].cantidad+""));
-			lblFichasJuego3.setText("Fichas en juego: "+(state.players[2].getFichasEnTablero().length + ""));
-			lblFichasSinJugar3.setText("Fichas sin jugar: "+(state.players[2].getFichasDisponibles().length + ""));
-		}
-
-		if (state.players.length >= 4) {
-			lblJugador4.setText(state.players[3].Nombre);
-			lblMonto4.setText(state.players[3].cantidad + "");
-			lblMonto4.setText("Monto del jugador: "+(state.players[3].cantidad+""));
-			lblFichasJuego4.setText("Fichas en juego: "+(state.players[3].getFichasEnTablero().length + ""));
-			lblFichasSinJugar4.setText("Fichas sin jugar: "+(state.players[3].getFichasDisponibles().length + ""));
-		}
 	}
 
 	/**
@@ -109,10 +106,10 @@ public class Tablerito extends javax.swing.JFrame {
         lblMonto3 = new javax.swing.JLabel();
         lblMonto4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblIcono1 = new javax.swing.JLabel();
+        lblIcono3 = new javax.swing.JLabel();
+        lblIcono4 = new javax.swing.JLabel();
+        lblIcono2 = new javax.swing.JLabel();
         lblFichasJuego1 = new javax.swing.JLabel();
         lblFichasSinJugar1 = new javax.swing.JLabel();
         lblBanco = new javax.swing.JLabel();
@@ -180,29 +177,25 @@ public class Tablerito extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(lblJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblIcono1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(lblJugador3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblJugador4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblJugador2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(9, 9, 9))
+                                    .addComponent(lblIcono2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -225,12 +218,16 @@ public class Tablerito extends javax.swing.JFrame {
                                             .addComponent(lblFichasSinJugar3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblMonto3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblFichasJuego3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblJugador3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblJugador4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblIcono3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(185, 185, 185)
                                 .addComponent(lblBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -238,7 +235,7 @@ public class Tablerito extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(lblFichasSinJugar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblIcono4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -257,8 +254,8 @@ public class Tablerito extends javax.swing.JFrame {
                             .addComponent(lblJugador2))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblIcono2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIcono1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -284,8 +281,8 @@ public class Tablerito extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblIcono3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIcono4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,10 +336,6 @@ public class Tablerito extends javax.swing.JFrame {
 	 */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBanco;
     private javax.swing.JLabel lblFichasJuego1;
@@ -353,6 +346,10 @@ public class Tablerito extends javax.swing.JFrame {
     private javax.swing.JLabel lblFichasSinJugar2;
     private javax.swing.JLabel lblFichasSinJugar3;
     private javax.swing.JLabel lblFichasSinJugar4;
+    private javax.swing.JLabel lblIcono1;
+    private javax.swing.JLabel lblIcono2;
+    private javax.swing.JLabel lblIcono3;
+    private javax.swing.JLabel lblIcono4;
     private javax.swing.JLabel lblJugador1;
     private javax.swing.JLabel lblJugador2;
     private javax.swing.JLabel lblJugador3;

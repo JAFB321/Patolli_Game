@@ -1,7 +1,5 @@
 package Logica;
 
-import java.io.Serializable;
-
 public class Game implements Runnable {
 
 	public AccionesGame acciones;
@@ -10,6 +8,8 @@ public class Game implements Runnable {
 	public Jugador[] players;
 	public Tablero tablero;
 	public Dados dados = new Dados();
+
+	public int Banco;
 
 	public int cantidadAPag;
 	public int cantidadInicial;
@@ -70,9 +70,24 @@ public class Game implements Runnable {
 			}
 			SiguienteTurno();
 		}
-
+		
+		Jugador winner = null;
+		for (Jugador player : players) {
+			if(!player.Eliminado) {
+				winner = player;
+				break;
+			}
+		}
+		
+		winner.cantidad += Banco;
+		Banco = 0;
+		
+		acciones.sendGameState();
+		
 		acciones.notifyPlayers("El juego ha finalizado", false);
-		// ?? 
+		acciones.notifyPlayers("El ganador es: "+winner.Nombre, false);
+		acciones.notifyPlayers(winner.Nombre+" ha ganado "+winner.cantidad, false);
+		acciones.notifyPlayers("Muchas gracias por participar!!!!", false);
 
 	}
 
@@ -184,11 +199,11 @@ public class Game implements Runnable {
 		boolean Avanzo = false;
 		do {
 			ficha = waitEscogerFicha();
-			
-			if(ficha == null){
+
+			if (ficha == null) {
 				return false;
 			}
-			
+
 			Avanzo = AvanzarFicha(ficha, nmovimientos);
 
 		} while (!Avanzo);
@@ -201,11 +216,14 @@ public class Game implements Runnable {
 		Tablero.strMovimientoFicha movimiento = tablero.AvanzarFicha(ficha, nmovimientos);
 
 		if (movimiento.seMovio) {
-			
+
 			acciones.sendGameState();
-			
+
 			if (movimiento.llegoMeta) {
 				acciones.notifyPlayer(getCurrentPlayer(), "Felicidades!! Tu ficha ha llegado a la meta!!", true, false);
+				if(getCurrentPlayer().checkFichasCruzaronMeta()){
+					WinPlayer(getCurrentPlayer());
+				}
 				return true;
 			}
 
@@ -227,6 +245,11 @@ public class Game implements Runnable {
 					if (movimiento.fichaEliminada != null) {
 						acciones.notifyPlayer(movimiento.fichaEliminada.player, "El jugador " + getCurrentPlayer().Nombre + " te ha eliminado una ficha", false, false);
 						acciones.notifyPlayer(getCurrentPlayer(), "Has eliminado una ficha de: " + movimiento.fichaEliminada.player.Nombre, true, false);
+						
+						if(movimiento.fichaEliminada.player.checkFichasAcabadas()){
+							EliminarJugador(movimiento.fichaEliminada.player);
+						}
+						
 					}
 					break;
 
@@ -236,24 +259,36 @@ public class Game implements Runnable {
 			if (movimiento.sePaso) {
 				acciones.notifyPlayer(getCurrentPlayer(), "Tu ficha se paso de la meta, elige otra ficha para mover", true, true);
 			} else {
-				acciones.notifyPlayer(getCurrentPlayer(), "La casilla donde quieres moverte esta ocupada, elige otra ficha para mover", true, true);
+				acciones.notifyPlayer(getCurrentPlayer(), "Caiste en la casilla con la ficha de un rival, te devuelves a donde empezaste!!", true, true);
+				return true;
 			}
 		}
 
 		return movimiento.seMovio;
 	}
-
+	
 	public void EliminarJugadorActual() {
-		getCurrentPlayer().Eliminado = true;
-		tablero.QuitarFichasJugador(getCurrentPlayer());
-		acciones.notifyPlayers("El jugador " + (getCurrentPlayer().Nombre) + " ha sido eliminado", false);
+		EliminarJugador(getCurrentPlayer());
+	}
+
+	public void EliminarJugador(Jugador player) {
+		if(!player.Eliminado){
+			Banco += player.cantidad;
+			player.cantidad = 0;
+			player.Eliminado = true;
+			tablero.QuitarFichasJugador(player);
+			acciones.notifyPlayers("El jugador " + (player.Nombre) + " ha sido eliminado", false);
+			acciones.sendGameState();			
+		}
 	}
 
 	// Eventos del juego
 	public void JugadorPagarApuesta(int cantidadAPag) {
 		acciones.waitPagarApuesta();
 		boolean pago = getCurrentPlayer().PagarApuesta(cantidadAPag);
-		if (!pago) {
+		if (pago) {
+			Banco += cantidadAPag;
+		} else {
 			EliminarJugadorActual();
 		}
 	}
@@ -266,6 +301,14 @@ public class Game implements Runnable {
 			}
 		}
 		return null;
+	}
+	
+	public void WinPlayer(Jugador winner){
+		for (Jugador player : players) {
+			if(!player.ID.equals(winner.ID)){
+				EliminarJugador(player);
+			}
+		}
 	}
 
 }

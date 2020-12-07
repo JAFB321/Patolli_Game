@@ -6,6 +6,8 @@ public class GameState implements Serializable {
 
     public Jugador[] players;
     public Tablero tablero;
+	
+	public int Banco;
 
     public int cantidadAPag;
     public int cantidadInicial;

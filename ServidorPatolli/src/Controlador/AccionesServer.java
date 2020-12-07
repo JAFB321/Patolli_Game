@@ -53,6 +53,7 @@ public class AccionesServer implements AccionesGame, Observer {
 		state.players = game.players;
 		state.tablero = game.tablero;
 		state.vuelta = game.vuelta;
+		state.Banco = game.Banco;
 	}
 
 	private void InitGame() {
