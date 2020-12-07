@@ -45,11 +45,11 @@ public class ControladorGUI {
     
     
     public void MostrarMensaje(String msg){
-        JOptionPane.showMessageDialog(currentPanel, msg);
+			JOptionPane.showMessageDialog(frame.isVisible() ? currentPanel : FrameTablerito, msg);			
     }
 	
 	public void MostrarError(String msg){
-        JOptionPane.showMessageDialog(currentPanel, msg, "Advertencia", 0);
+        JOptionPane.showMessageDialog(frame.isVisible() ? currentPanel : FrameTablerito, msg, "Advertencia", 0);
     }
     
     
