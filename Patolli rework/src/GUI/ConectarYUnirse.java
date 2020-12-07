@@ -131,8 +131,13 @@ public class ConectarYUnirse extends javax.swing.JPanel {
 
     private void BtnUnirseAPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUnirseAPartidaActionPerformed
         Jugador player = new Jugador();
+						
         player.Nombre = JOptionPane.showInputDialog("Ingresa tu nombre");
         
+		while (player.Nombre.equals("")) {			
+			player.Nombre = JOptionPane.showInputDialog("Ingresa tu nombre");
+		}		
+		
         Acciones.JoinGame(player);        
     }//GEN-LAST:event_BtnUnirseAPartidaActionPerformed
 

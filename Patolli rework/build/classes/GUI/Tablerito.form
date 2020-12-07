@@ -30,93 +30,95 @@
               <EmptySpace min="42" pref="42" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblIcono1" min="-2" pref="141" max="-2" attributes="0"/>
+                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblJugador1" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblIcono1" min="-2" pref="141" max="-2" attributes="0"/>
-                                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblJugador1" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblJugador2" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblIcono2" min="-2" pref="141" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblJugador2" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                  <Component id="lblMonto1" pref="132" max="32767" attributes="0"/>
+                                  <Component id="lblFichasJuego1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblFichasSinJugar1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblColor1" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="598" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblFichasJuego2" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                                          <Component id="lblMonto2" min="-2" pref="135" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="55" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="lblIcono2" min="-2" pref="141" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblFichasSinJugar2" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblColor2" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="lblMonto1" pref="132" max="32767" attributes="0"/>
-                                          <Component id="lblFichasJuego1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="lblFichasSinJugar1" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="598" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lblFichasJuego2" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
-                                                  <Component id="lblMonto2" min="-2" pref="135" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="lblFichasSinJugar2" max="32767" attributes="0"/>
-                                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblFichasSinJugar3" min="-2" pref="135" max="-2" attributes="0"/>
-                                          <Component id="lblMonto3" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                                          <Component id="lblFichasJuego3" min="-2" pref="125" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblJugador3" min="-2" pref="100" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="lblJugador4" min="-2" pref="122" max="-2" attributes="0"/>
-                                  </Group>
+                              <Component id="lblJugador3" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblJugador4" min="-2" pref="122" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblColor3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblFichasSinJugar3" alignment="0" pref="135" max="32767" attributes="0"/>
+                                  <Component id="lblMonto3" alignment="0" pref="135" max="32767" attributes="0"/>
+                                  <Component id="lblFichasJuego3" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblIcono3" min="-2" pref="141" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
-                              <Component id="lblBanco" min="-2" pref="245" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="lblFichasSinJugar4" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblIcono4" min="-2" pref="141" max="-2" attributes="0"/>
+                      <Component id="lblIcono3" min="-2" pref="141" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
+                      <Component id="lblBanco" min="-2" pref="245" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                  <Component id="lblFichasSinJugar4" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="lblIcono4" min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblMonto4" min="-2" pref="135" max="-2" attributes="0"/>
-                                  <Component id="lblFichasJuego4" min="-2" pref="135" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="lblColor4" min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblMonto4" min="-2" pref="135" max="-2" attributes="0"/>
+                          <Component id="lblFichasJuego4" min="-2" pref="135" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -143,25 +145,30 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="lblMonto2" min="-2" pref="17" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblFichasJuego2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblFichasSinJugar2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="355" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblJugador4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblJugador3" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="lblMonto1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblFichasJuego1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblFichasSinJugar1" min="-2" max="-2" attributes="0"/>
                   </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="lblColor1" max="32767" attributes="0"/>
+                  <Component id="lblColor2" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="334" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblJugador4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblJugador3" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -194,7 +201,12 @@
                       <Component id="lblFichasSinJugar3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblColor3" alignment="3" max="32767" attributes="0"/>
+                  <Component id="lblColor4" alignment="3" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -309,6 +321,26 @@
     <Component class="javax.swing.JLabel" name="lblFichasSinJugar4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fichas sin jugar:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblColor1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Color Jugador"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblColor2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Color Jugador"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblColor3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Color Jugador"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblColor4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Color Jugador"/>
       </Properties>
     </Component>
   </SubComponents>
